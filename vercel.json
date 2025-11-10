@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "**/*.dart",
+      "src": "pubspec.yaml",
       "use": "@vercel/static-build",
       "config": {
         "installCommand": "if cd flutter; then git pull && cd .. ; else git clone https://github.com/flutter/flutter.git; fi && flutter/bin/flutter clean && flutter/bin/flutter config --enable-web && flutter/bin/flutter pub get",
