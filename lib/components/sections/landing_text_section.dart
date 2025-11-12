@@ -11,22 +11,19 @@ class LandingTextSection extends StatelessWidget {
     final double startFadeOut = screenHeight * 0.3;
     final double endFadeOut = screenHeight * 0.9;
 
-    if (scrollOffset < startFadeOut) {
-      return 1.0;
-    } else if (scrollOffset >= endFadeOut) {
-      return 0.0;
-    } else {
-      final progress =
-          (scrollOffset - startFadeOut) / (endFadeOut - startFadeOut);
-      return 1.0 - progress;
-    }
+    if (scrollOffset < startFadeOut) return 1.0;
+    if (scrollOffset >= endFadeOut) return 0.0;
+
+    final progress =
+        (scrollOffset - startFadeOut) / (endFadeOut - startFadeOut);
+    return 1.0 - progress;
   }
 
   Color _calculateTextColorLerp(double screenHeight) {
     final offScreenPercentage = min(scrollOffset / (screenHeight * 0.7), 1.0);
 
     final textColor = Color.lerp(
-        AppColors.secondaryColor, AppColors.accentColor, offScreenPercentage);
+        AppColors.midBrownColor, AppColors.accentColor, offScreenPercentage);
     return textColor!;
   }
 

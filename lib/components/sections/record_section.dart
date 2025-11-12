@@ -15,11 +15,18 @@ class _RecordSectionState extends State<RecordSection>
   bool isClicked = false;
   bool _showLottie = true;
 
-  double _calculateTextReveal({required double begin, required double end}) {
-    if (widget.scrollOffset < begin) return 0.0;
-    if (widget.scrollOffset >= end) return 1.0;
+  double _calculateTextReveal(
+      {required double screenHeight,
+      required double end,
+      required double delay}) {
+    final double begin = screenHeight * 1.0;
+    double adjustedScrollOffset = widget.scrollOffset - (delay * 100);
 
-    final double linearProgress = (widget.scrollOffset - begin) / (end - begin);
+    if (adjustedScrollOffset < begin) return 0.0;
+    if (adjustedScrollOffset >= end) return 1.0;
+
+    final double linearProgress =
+        (adjustedScrollOffset - begin) / (end - begin);
     return Curves.easeOutCubic.transform(linearProgress);
   }
 
@@ -27,7 +34,7 @@ class _RecordSectionState extends State<RecordSection>
     setState(() {
       isClicked = !isClicked;
       if (isClicked) {
-        Future.delayed(const Duration(milliseconds: 400), () {
+        Future.delayed(const Duration(milliseconds: 200), () {
           if (mounted) {
             setState(() {
               _showLottie = false;
@@ -47,14 +54,14 @@ class _RecordSectionState extends State<RecordSection>
     return Container(
       height: screenSize.height,
       width: screenSize.width,
-      color: AppColors.secondaryColor,
+      color: AppColors.midBrownColor,
       child: Stack(
         children: [
           // Top Left Folder
           AnimatedPositioned(
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
-            top: 360,
+            top: 340,
             left: isClicked ? 400 : 713,
             child: _buildFolder(
                 'assets/icons/yellow_folder.png', 'My Professional Journey'),
@@ -63,7 +70,7 @@ class _RecordSectionState extends State<RecordSection>
           AnimatedPositioned(
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
-            top: isClicked ? 540 : 400,
+            top: isClicked ? 540 : 340,
             left: isClicked ? 440 : 713,
             child: _buildFolder(
                 'assets/icons/peach_folder.png', 'Educational Backgrounds'),
@@ -72,7 +79,7 @@ class _RecordSectionState extends State<RecordSection>
           AnimatedPositioned(
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
-            top: 360,
+            top: 340,
             right: isClicked ? 400 : 713,
             child: _buildFolder('assets/icons/orange_folder.png',
                 'Achievements & Certifications'),
@@ -81,7 +88,7 @@ class _RecordSectionState extends State<RecordSection>
           AnimatedPositioned(
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
-            top: isClicked ? 540 : 400,
+            top: isClicked ? 540 : 340,
             right: isClicked ? 440 : 713,
             child: _buildFolder(
                 'assets/icons/purple_folder.png', 'Events & Campaigns'),
@@ -100,14 +107,15 @@ class _RecordSectionState extends State<RecordSection>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 30),
-                _buildTextAnimaion(
+                _buildTextAnimation(
                   text: 'FOLDERS OF MY LIFE',
                   progress: _calculateTextReveal(
-                    begin: screenSize.height * 1.0,
-                    end: screenSize.height * 2.2,
+                    screenHeight: screenSize.height,
+                    end: screenSize.height * 1.2,
+                    delay: 0.0,
                   ),
-                  textStyle: const TextStyle(
-                    color: AppColors.accentColor,
+                  style: const TextStyle(
+                    color: AppColors.lightBrownColor,
                     fontSize: 60,
                     letterSpacing: 1.2,
                     fontWeight: FontWeight.bold,
@@ -115,11 +123,30 @@ class _RecordSectionState extends State<RecordSection>
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  'Each folder captures a chapter of my journey\n— explore my professional path, milestones & the skills I’ve built along the way',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryColor,
+                _buildTextAnimation(
+                  text: 'Each folder captures a chapter of my journey',
+                  progress: _calculateTextReveal(
+                    screenHeight: screenSize.height,
+                    end: screenSize.height * 1.1,
+                    delay: 0.3,
+                  ),
+                  style: const TextStyle(
+                    color: AppColors.lightBrownColor,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Agrandir',
+                  ),
+                ),
+                _buildTextAnimation(
+                  text:
+                      '— explore my professional path, milestones & the skills I’ve built along the way',
+                  progress: _calculateTextReveal(
+                    screenHeight: screenSize.height,
+                    end: screenSize.height * 1.1,
+                    delay: 0.8,
+                  ),
+                  style: const TextStyle(
+                    color: AppColors.lightBrownColor,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Agrandir',
@@ -140,7 +167,7 @@ class _RecordSectionState extends State<RecordSection>
           ),
           const Positioned(
             bottom: 240,
-            left: 610,
+            left: 605,
             child: Text(
               'Tap the laptop to explore my works and profiles!',
               textAlign: TextAlign.center,
@@ -179,20 +206,21 @@ class _RecordSectionState extends State<RecordSection>
     );
   }
 
-  Widget _buildTextAnimaion({
+  Widget _buildTextAnimation({
     required String text,
     required double progress,
-    required TextStyle textStyle,
+    required TextStyle style,
   }) {
     return ClipRRect(
       child: Align(
         alignment: Alignment.topCenter,
         heightFactor: progress,
-        child: Transform.translate(
-          offset: Offset(0, 10 * (1.0 - progress)),
+        child: AnimatedOpacity(
+          duration: const Duration(milliseconds: 100),
+          opacity: progress,
           child: Text(
             text,
-            style: textStyle,
+            style: style,
           ),
         ),
       ),

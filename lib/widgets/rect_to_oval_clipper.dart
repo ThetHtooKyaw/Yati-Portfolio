@@ -20,29 +20,28 @@ class RectToOvalClipper extends CustomClipper<Path> {
       path.addRect(Rect.fromLTWH(0, 0, w, h));
     } else if (progress == 1.0) {
       // Rotated ellipse
-      path = _createRotatedEllipse(
-          centerX, centerY, w * 0.4, h * 0.45, rotationAngle);
+      double finalWidth = w * (1.0 - 0.2); // 80%
+      double finalHeight = h * (1.0 - 0.2); // 80%
+      path = _createRotatedEllipse(centerX, centerY, finalWidth * 0.5,
+          finalHeight * 0.52, rotationAngle);
     } else {
-      // Smooth Animation
       double easedProgress = Curves.easeInOutQuad.transform(progress);
 
       // Oval Size Adjustment
-      double currentWidth =
-          w * (1.0 - easedProgress * 0.20); // 80% width reduction
-      double currentHeight =
-          h * (1.0 - easedProgress * 0.20); // 80% height reduction
+      double currentWidth = w * (1.0 - easedProgress * 0.2); // 80%
+      double currentHeight = h * (1.0 - easedProgress * 0.2); // 80%
 
       // Rotation
       double currentRotation = rotationAngle * easedProgress;
 
       // Border Radius
       double maxRadius = min(currentWidth, currentHeight) / 2;
-      double currentRadius = maxRadius * easedProgress;
+      double radiusMultiplier = 0.3 + (easedProgress - 0.19) * 1.5;
+      double currentRadius = maxRadius * radiusMultiplier.clamp(0.0, 1.0);
 
-      if (easedProgress < 0.8) {
-        Path rectPath = Path();
-
+      if (easedProgress < 0.9) {
         // Apply Border Radius
+        Path rectPath = Path();
         rectPath.addRRect(RRect.fromRectAndRadius(
           Rect.fromCenter(
             center: Offset(centerX, centerY),
@@ -65,7 +64,7 @@ class RectToOvalClipper extends CustomClipper<Path> {
       } else {
         // Final stage: perfect rotated oval
         path = _createRotatedEllipse(centerX, centerY, currentWidth * 0.5,
-            currentHeight * 0.5, currentRotation);
+            currentHeight * 0.52, currentRotation);
       }
     }
 

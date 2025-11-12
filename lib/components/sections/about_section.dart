@@ -38,25 +38,25 @@ class AboutSection extends StatelessWidget {
       opacity: _calculateOpacity(screenSize.height),
       duration: const Duration(milliseconds: 100),
       child: SizedBox(
-        height: screenSize.height + 50,
+        height: screenSize.height,
         width: screenSize.width,
         child: Stack(
           children: [
             // Quote Text
             Positioned(
-              bottom: 60,
+              bottom: 20,
               left: 370,
               child: _buildQuoteText(),
             ),
             // Slide Container
             Positioned(
-              top: 248,
+              top: 246,
               left: _calculateSlideContainer(screenSize.height),
               child: Container(
                 height: 120,
                 width: 760,
                 decoration: BoxDecoration(
-                  color: AppColors.secondaryColor,
+                  color: AppColors.midBrownColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
@@ -71,11 +71,11 @@ class AboutSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Hello, I\'m',
+                    'Hello, It\'s Me',
                     style: TextStyle(
                       height: 1,
                       color: AppColors.whiteColor,
-                      fontSize: 45,
+                      fontSize: 40,
                       letterSpacing: 1,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Horizon',
@@ -95,9 +95,10 @@ class AboutSection extends StatelessWidget {
                   const SizedBox(height: 20),
                   DefaultTextStyle(
                     style: GoogleFonts.lora(
-                        color: const Color(0xFFA46E56),
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold),
+                      color: AppColors.midBrownColor,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                     child: AnimatedTextKit(
                       repeatForever: true,
                       animatedTexts: [
@@ -125,7 +126,7 @@ class AboutSection extends StatelessWidget {
                     ),
                   ),
                   const Divider(
-                    color: AppColors.secondaryColor,
+                    color: AppColors.midBrownColor,
                     thickness: 4,
                     endIndent: 666,
                   ),
@@ -158,7 +159,7 @@ class AboutSection extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: Image.asset(
               'assets/icons/start_quote.png',
-              color: AppColors.secondaryColor,
+              color: AppColors.midBrownColor,
               height: 30,
               width: 30,
             ),
@@ -170,6 +171,7 @@ class AboutSection extends StatelessWidget {
               "I’m always open to new ideas, new environments, and new challenges because\n that’s where real growth happens.",
               textAlign: TextAlign.center,
               style: TextStyle(
+                height: 1.2,
                 color: AppColors.textColor,
                 fontSize: 18,
                 letterSpacing: 1,
@@ -182,7 +184,7 @@ class AboutSection extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: Image.asset(
               'assets/icons/end_quote.png',
-              color: AppColors.secondaryColor,
+              color: AppColors.midBrownColor,
               height: 30,
               width: 30,
             ),

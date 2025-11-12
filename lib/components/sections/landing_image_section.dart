@@ -12,7 +12,6 @@ class LandingImageSection extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
     final offScreenPercentage =
         min(scrollOffset / (screenSize.height * 0.7), 1.0);
-    print(scrollOffset);
 
     return ClipPath(
       clipper: RectToOvalClipper(

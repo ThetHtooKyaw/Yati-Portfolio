@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:yati_portfolio/components/sections/landing_image_section.dart';
 import 'package:yati_portfolio/components/sections/record_section.dart';
+import 'package:yati_portfolio/components/sections/skillset_section.dart';
 import 'package:yati_portfolio/utils/app_color.dart';
 import 'components/sections/about_section.dart';
 import 'components/sections/landing_text_section.dart';
@@ -92,6 +93,11 @@ class _LandingPageState extends State<LandingPage> {
               ),
               ScrollTransformItem(
                 builder: (scrollOffset) {
+                  return SkillsetSection(scrollOffset: scrollOffset);
+                },
+              ),
+              ScrollTransformItem(
+                builder: (scrollOffset) {
                   return RecordSection(scrollOffset: scrollOffset);
                 },
               ),
@@ -104,7 +110,7 @@ class _LandingPageState extends State<LandingPage> {
 
   Widget _buildCircleAnimation(Size screenSize) {
     return Positioned(
-      top: -400 - (_currentScrollOffset / (screenSize.height * 0.7)) * 400,
+      top: -400 - (_currentScrollOffset / (screenSize.height * 0.7)) * 420,
       right: -230 - (_currentScrollOffset / (screenSize.height * 0.7)) * 600,
       child: AnimatedScale(
         scale: 1.0 - (_currentScrollOffset / (screenSize.height * 0.7)) * 0.4,
@@ -113,7 +119,7 @@ class _LandingPageState extends State<LandingPage> {
           height: 2000,
           width: 2000,
           decoration: const BoxDecoration(
-            color: AppColors.secondaryColor,
+            color: AppColors.midBrownColor,
             shape: BoxShape.circle,
           ),
         ),
