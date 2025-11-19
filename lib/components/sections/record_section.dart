@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:yati_portfolio/utils/app_color.dart';
 
+// To Do
+// 1. change text color
+// 2. add 1 or 2 appealing icon or animation
+
 class RecordSection extends StatefulWidget {
   final double scrollOffset;
   const RecordSection({super.key, required this.scrollOffset});
@@ -12,7 +16,7 @@ class RecordSection extends StatefulWidget {
 
 class _RecordSectionState extends State<RecordSection>
     with TickerProviderStateMixin {
-  bool isClicked = false;
+  bool _isClicked = false;
   bool _showLottie = true;
 
   double _calculateTextReveal(
@@ -32,8 +36,8 @@ class _RecordSectionState extends State<RecordSection>
 
   void _toggleClicked() {
     setState(() {
-      isClicked = !isClicked;
-      if (isClicked) {
+      _isClicked = !_isClicked;
+      if (_isClicked) {
         Future.delayed(const Duration(milliseconds: 200), () {
           if (mounted) {
             setState(() {
@@ -62,7 +66,7 @@ class _RecordSectionState extends State<RecordSection>
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
             top: 340,
-            left: isClicked ? 400 : 713,
+            left: _isClicked ? 400 : 713,
             child: _buildFolder(
                 'assets/icons/yellow_folder.png', 'My Professional Journey'),
           ),
@@ -70,8 +74,8 @@ class _RecordSectionState extends State<RecordSection>
           AnimatedPositioned(
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
-            top: isClicked ? 540 : 340,
-            left: isClicked ? 440 : 713,
+            top: _isClicked ? 540 : 340,
+            left: _isClicked ? 440 : 713,
             child: _buildFolder(
                 'assets/icons/peach_folder.png', 'Educational Backgrounds'),
           ),
@@ -80,7 +84,7 @@ class _RecordSectionState extends State<RecordSection>
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
             top: 340,
-            right: isClicked ? 400 : 713,
+            right: _isClicked ? 400 : 713,
             child: _buildFolder('assets/icons/orange_folder.png',
                 'Achievements & Certifications'),
           ),
@@ -88,8 +92,8 @@ class _RecordSectionState extends State<RecordSection>
           AnimatedPositioned(
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
-            top: isClicked ? 540 : 340,
-            right: isClicked ? 440 : 713,
+            top: _isClicked ? 540 : 340,
+            right: _isClicked ? 440 : 713,
             child: _buildFolder(
                 'assets/icons/purple_folder.png', 'Events & Campaigns'),
           ),
@@ -97,7 +101,7 @@ class _RecordSectionState extends State<RecordSection>
           AnimatedPositioned(
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
-            top: isClicked ? 640 : 400,
+            top: _isClicked ? 640 : 400,
             left: 720,
             child: _buildFolder('assets/icons/black_folder.png', 'Activities'),
           ),
@@ -165,6 +169,7 @@ class _RecordSectionState extends State<RecordSection>
               ],
             ),
           ),
+          // Hint Text
           const Positioned(
             bottom: 240,
             left: 605,

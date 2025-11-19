@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:yati_portfolio/components/sections/landing_image_section.dart';
@@ -93,7 +94,30 @@ class _LandingPageState extends State<LandingPage> {
               ),
               ScrollTransformItem(
                 builder: (scrollOffset) {
-                  return SkillsetSection(scrollOffset: scrollOffset);
+                  return Stack(
+                    children: [
+                      SkillsetSection(scrollOffset: scrollOffset),
+                      Transform.translate(
+                        offset: const Offset(0, -20),
+                        child: ClipRect(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                            child: Container(
+                              height: 40,
+                              width: double.infinity,
+                              decoration: const BoxDecoration(boxShadow: [
+                                BoxShadow(
+                                  color: Colors.transparent,
+                                  blurRadius: 10,
+                                  spreadRadius: 10,
+                                ),
+                              ]),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
                 },
               ),
               ScrollTransformItem(
