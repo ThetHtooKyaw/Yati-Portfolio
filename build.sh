@@ -13,6 +13,8 @@ else
   echo "Using existing Flutter SDK"
 fi
 
+git config --global --add safe.directory /vercel/path0/flutter
+
 # Enable web
 $FLUTTER_DIR/bin/flutter config --enable-web
 
