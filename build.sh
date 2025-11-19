@@ -1,0 +1,26 @@
+#!/bin/bash
+
+FLUTTER_VERSION="3.24.5"
+FLUTTER_DIR="flutter"
+
+# Download fixed Flutter version if not already installed
+if [ ! -d "$FLUTTER_DIR" ]; then
+  echo "Downloading Flutter $FLUTTER_VERSION (Linux)..."
+  curl -o flutter_sdk.tar.xz "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_$FLUTTER_VERSION-stable.tar.xz"
+  tar -xf flutter_sdk.tar.xz
+  rm flutter_sdk.tar.xz
+else
+  echo "Using existing Flutter SDK"
+fi
+
+git config --global --add safe.directory /vercel/path0/flutter
+
+# Enable web
+$FLUTTER_DIR/bin/flutter config --enable-web
+
+# Install dependencies
+$FLUTTER_DIR/bin/flutter pub get
+
+# Build
+$FLUTTER_DIR/bin/flutter clean
+$FLUTTER_DIR/bin/flutter build web --release
