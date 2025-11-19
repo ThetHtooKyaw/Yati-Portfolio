@@ -1,19 +1,24 @@
 #!/bin/bash
 
-# Install Flutter if missing
-if [ ! -d "flutter" ]; then
-  git clone https://github.com/flutter/flutter.git
+FLUTTER_VERSION="3.22.1"
+FLUTTER_DIR="flutter"
+
+# Download fixed Flutter version if not already installed
+if [ ! -d "$FLUTTER_DIR" ]; then
+  echo "Downloading Flutter $FLUTTER_VERSION (Linux)..."
+  curl -o flutter_sdk.tar.xz "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_$FLUTTER_VERSION-stable.tar.xz"
+  tar -xf flutter_sdk.tar.xz
+  rm flutter_sdk.tar.xz
 else
-  cd flutter
-  git pull
-  cd ..
+  echo "Using existing Flutter SDK"
 fi
 
-# Enable Flutter Web
-flutter/bin/flutter config --enable-web
+# Enable web
+$FLUTTER_DIR/bin/flutter config --enable-web
 
-# Install packages
-flutter/bin/flutter pub get
+# Install dependencies
+$FLUTTER_DIR/bin/flutter pub get
 
-# Build web release
-flutter/bin/flutter build web --release
+# Build
+$FLUTTER_DIR/bin/flutter clean
+$FLUTTER_DIR/bin/flutter build web --release
