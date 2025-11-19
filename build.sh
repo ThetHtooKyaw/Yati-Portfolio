@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FLUTTER_VERSION="3.22.1"
+FLUTTER_VERSION="3.24.5"
 FLUTTER_DIR="flutter"
 
 # Download fixed Flutter version if not already installed
