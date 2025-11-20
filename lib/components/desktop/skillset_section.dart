@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:yati_portfolio/utils/app_color.dart';
-import 'package:yati_portfolio/widgets/glass_container.dart';
+import 'package:yati_portfolio/widgets/presentation/glass_container.dart';
 import '../../models/personal_skills_model.dart';
 
 // To Do
@@ -229,7 +229,7 @@ class _SkillsetSectionState extends State<SkillsetSection> {
                   borderRadius: BorderRadius.circular(16),
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                    child: CupertinoSlidingSegmentedControl(
+                    child: CupertinoSlidingSegmentedControl<int>(
                       padding: const EdgeInsets.all(8),
                       thumbColor: AppColors.midBrownColor,
                       backgroundColor:
@@ -242,7 +242,7 @@ class _SkillsetSectionState extends State<SkillsetSection> {
                           _showSelectedSkills(screenSize);
                         });
                       },
-                      children: <dynamic, Widget>{
+                      children: <int, Widget>{
                         0: _buildCustomText('Languages', 0),
                         1: _buildCustomText('Professional Skills', 1),
                         2: _buildCustomText('Soft Skills', 2),
